@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ملخص أساسيات برنامج Excel</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+
+        :root {
+            --primary: #107c41;
+            --primary-light: #18a558;
+            --secondary: #ffffff;
+            --bg: #f3f4f6;
+            --text-main: #1f2937;
+            --text-muted: #4b5563;
+            --accent: #ffb900;
+            --note-bg: #eef2ff;
+            --note-border: #6366f1;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: var(--secondary);
+            padding: 3rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            animation: fadeInDown 1s ease-out;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .section-title {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 60px;
+            height: 4px;
+            background-color: var(--accent);
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: var(--secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card ul {
+            list-style: none;
+        }
+
+        .card ul li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-right: 1.5rem;
+        }
+
+        .card ul li::before {
+            content: '📌';
+            position: absolute;
+            right: 0;
+            top: 2px;
+            font-size: 0.9rem;
+        }
+
+        /* Step by Step Section */
+        .steps-container {
+            margin: 4rem 0;
+        }
+
+        .step-card {
+            background: var(--secondary);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-card:hover {
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            transform: scale(1.02);
+        }
+
+        .step-number {
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 1.2rem;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+        }
+
+        .step-card h4 {
+            font-size: 1.5rem;
+            color: var(--text-main);
+            margin: 1rem 0;
+        }
+
+        .step-card p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .step-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.5s ease;
+        }
+
+        .step-card:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Notes Box */
+        .note-box {
+            background-color: var(--note-bg);
+            border-right: 5px solid var(--note-border);
+            padding: 1.5rem;
+            border-radius: 8px 0 0 8px;
+            margin: 2rem 0;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .note-box h4 {
+            color: var(--note-border);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Final Summary Box */
+        .summary-box {
+            background: linear-gradient(135deg, #1f2937, #374151);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 3rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        .summary-box h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .step-card {
+                flex-direction: row;
+                text-align: right;
+                justify-content: space-between;
+            }
+            .step-card .step-content {
+                flex: 1;
+                padding-right: 3rem;
+            }
+            .step-card img {
+                width: 400px;
+                object-fit: cover;
+                margin-right: 2rem;
+            }
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            background-color: var(--secondary);
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            border-top: 2px solid var(--note-bg);
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        footer b {
+            color: #e11d48;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>📊 ملخص أساسيات برنامج Excel</h1>
+        <p>دليل شامل ومبسط للمبتدئين لفهم والعمل على جداول البيانات</p>
+    </header>
+
+    <div class="container">
+        
+        <h2 class="section-title">🌟 المفاهيم الأساسية</h2>
+        
+        <div class="cards-grid">
+            <!-- Card 1 -->
+            <div class="card">
+                <h3>💡 ما هو Excel؟</h3>
+                <ul>
+                    <li>برنامج جداول بيانات من إنتاج شركة مايكروسوفت.</li>
+                    <li>يقوم بتنظيم البيانات في <b>أعمدة وصفوف</b>.</li>
+                    <li>يتيح إجراء العمليات الحسابية المتقدمة.</li>
+                    <li>يعمل على جميع الأنظمة (Windows, macOS, iOS, Android).</li>
+                </ul>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="card">
+                <h3>🎯 لماذا نستخدمه؟</h3>
+                <ul>
+                    <li>الأكثر شعبية في العالم لسهولة تعلمه.</li>
+                    <li>حدود المهارات فيه عالية (يتطور مع مستواك).</li>
+                    <li>مفيد جداً في العمل والحياة اليومية كميزانية الأسرة.</li>
+                </ul>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="card">
+                <h3>🛠️ مصطلحات هامة</h3>
+                <ul>
+                    <li><b>الأعمدة:</b> تسمى بالأحرف (A, B, C).</li>
+                    <li><b>الصفوف:</b> تسمى بالأرقام (1, 2, 3).</li>
+                    <li><b>مربع الاسم (Name Box):</b> لمعرفة اسم وعنوان الخلية المحددة.</li>
+                    <li><b>أوراق العمل (Sheets):</b> مجموعة من الصفوف والأعمدة.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="note-box">
+            <h4>⚠️ ملاحظة مهمة جداً (Ribbon & Taps)</h4>
+            <p>الشريط (Ribbon) يوفر اختصارات للأوامر لتغيير الخط أو الخلية. ينقسم هذا الشريط إلى <b>علامات تبويب (Tabs)</b> تحتوي على مجموعات (Groups) من الأزرار تسمى <b>الأوامر (Commands)</b> لتنفيذ الإجراءات المختلفة داخل البرنامج.</p>
+        </div>
+
+        <h2 class="section-title">🧮 كيفية كتابة صيغة حسابية (Syntax)</h2>
+        <p style="text-align: center; margin-bottom: 2rem; color: var(--text-muted);">لإجراء عملية طرح بسيطة بين خليتين، اتبع الخطوات التفاعلية التالية:</p>
+
+        <div class="steps-container">
+            
+            <!-- Step 1 -->
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>تحديد الخلية المراد كتابة الناتج بها</h4>
+                    <p>أولاً وقبل كل شيء، قم بالضغط بزر الفأرة الأيسر لاختيار الخلية <b>C1</b> لتكون هي المكان الذي سيظهر فيه الناتج.</p>
+                </div>
+                <!-- AI Image placeholder representing selecting cell C1 -->
+                <img src="images/step1.png" alt="اختيار الخلية C1">
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>بدء الصيغة الحسابية</h4>
+                    <p>قم بطباعة علامة المساواة <b>(=)</b> في الخلية المحددة. هذه العلامة تخبر Excel بأنك ستقوم بكتابة معادلة حسابية وليس نصاً عادياً.</p>
+                </div>
+                <!-- AI Image placeholder representing typing equal sign -->
+                <img src="images/step2.png" alt="كتابة علامة يساوي">
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h4>اختيار القيمة الأولى</h4>
+                    <p>اضغط بالزر الأيسر للفأرة على الخلية <b>A1</b> (والتي تحتوي مثلاً على الرقم 309). سيظهر اسم الخلية تلقائياً في معادلتك.</p>
+                </div>
+                <!-- AI Image placeholder representing selecting first cell -->
+                <img src="images/step3.png" alt="اختيار الخلية الأولى">
+            </div>
+
+            <!-- Step 4 -->
+            <div class="step-card">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h4>تحديد العملية (الطرح)</h4>
+                    <p>قم بكتابة علامة الطرح <b>(-)</b> من لوحة المفاتيح لتحديد نوع العملية الحسابية المراد تنفيذها.</p>
+                </div>
+                <!-- AI Image placeholder representing typing minus sign -->
+                <img src="images/step4.png" alt="كتابة علامة الطرح">
+            </div>
+
+            <!-- Step 5 -->
+            <div class="step-card">
+                <div class="step-number">5</div>
+                <div class="step-content">
+                    <h4>اختيار القيمة الثانية وإنهاء المعادلة</h4>
+                    <p>اضغط بالزر الأيسر للفأرة على الخلية <b>B2</b> (والتي تحتوي مثلاً على الرقم 35)، ثم اضغط على زر <b>Enter</b> لإظهار النتيجة النهائية.</p>
+                </div>
+                <!-- AI Image placeholder representing picking cell 2 and pressing enter -->
+                <img src="images/step5.png" alt="اختيار الخلية الثانية والضغط على إدخال">
+            </div>
+
+        </div>
+
+        <h2 class="section-title">🔑 مذكرات رئيسية (Key Notes)</h2>
+        
+        <div class="cards-grid">
+            <div class="card">
+                <h3>✨ خاصية الملء التلقائي (Excel Fill)</h3>
+                <p>تستخدم لنسخ البيانات أو إنشاء تسلسلات تلقائياً لتوفير الوقت. يتم ذلك بالنقر المزدوج على أيقونة الملء الزرقاء/الخضراء أسفل زاوية الخلية، أو عن طريق سحبها.</p>
+            </div>
+            
+            <div class="card">
+                <h3>🔗 المراجع النسبية</h3>
+                <p>هي مراجع خلايا <b>تتغير تلقائياً</b> عند نسخ الصيغة إلى خلايا أخرى، لتتكيف مع الموقع الجديد بالنسبة للخلية الأصلية.</p>
+            </div>
+
+            <div class="card">
+                <h3>🔒 المراجع المطلقة</h3>
+                <p>هي مراجع خلايا <b>ثابتة</b> لا تتغير عند النسخ. يتم تمييزها بعلامة الدولار قبل الحرف والرقم، مثال: <code>$A$1</code>.</p>
+            </div>
+        </div>
+
+        <div class="summary-box">
+            <h3>📝 الخلاصة النهائية (Final Summary)</h3>
+            <p>يعد برنامج إكسل (Excel) أداة قوية ومرنة لا غنى عنها في جمع وتحليل البيانات. من خلال فهمك لأساسيات واجهة المستخدم (مثل الشريط والأوراق والخلايا)، وإتقانك لكيفية كتابة المعادلات الحسابية الدقيقة، بالإضافة إلى استخدام الأدوات الذكية كالتعبئة التلقائية (Fill) وفهم الفرق بين المراجع الثابتة والمتغيرة، ستتمكن من توفير الكثير من الجهد والوقت لبناء جداول متقدمة واحترافية.</p>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>❤️ تم الإعداد بكل حب من <b>قيس الجازي</b> لـ <b>رهف حبيبته</b> ❤️</p>
+    </footer>
+
+</body>
+</html>
